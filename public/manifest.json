@@ -1,0 +1,11 @@
+{
+  "name": "גרוסרי",
+  "short_name": "גרוסרי",
+  "description": "ניהול וניתוח חשבוניות סופר בקלות",
+  "theme_color": "#2563EB",
+  "background_color": "#FFFFFF",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "icons": []
+}

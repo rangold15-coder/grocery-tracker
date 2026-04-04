@@ -1,0 +1,325 @@
+/* ========================================
+   מערכת עיצוב מרכזית — grocery-tracker
+   ======================================== */
+
+/* 1. פלטת צבעים — Light Mode */
+:root {
+  --color-primary-50: #EFF6FF;
+  --color-primary-100: #DBEAFE;
+  --color-primary-200: #BFDBFE;
+  --color-primary-400: #60A5FA;
+  --color-primary-500: #3B82F6;
+  --color-primary-600: #2563EB;
+  --color-primary-700: #1D4ED8;
+
+  --color-bg-base: #FFFFFF;
+  --color-bg-surface: #F8FAFC;
+  --color-bg-card: #FFFFFF;
+  --color-bg-input: #F1F5F9;
+
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+  --color-text-on-primary: #FFFFFF;
+
+  --color-border: #E2E8F0;
+  --color-border-focus: #3B82F6;
+
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+  --color-info: #3B82F6;
+
+  /* 3. צבעי קטגוריות */
+  --cat-vegetables: #16A34A;
+  --cat-dairy: #2563EB;
+  --cat-meat: #DC2626;
+  --cat-snacks: #D97706;
+  --cat-drinks: #0891B2;
+  --cat-cleaning: #7C3AED;
+  --cat-personal: #DB2777;
+  --cat-sauces: #EA580C;
+  --cat-canned: #65A30D;
+  --cat-cereal: #CA8A04;
+  --cat-bread: #92400E;
+  --cat-frozen: #0369A1;
+  --cat-disposable: #6B7280;
+  --cat-other: #9CA3AF;
+
+  /* 4. טיפוגרפיה */
+  --font-sans: 'Heebo', 'Rubik', system-ui, sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 13px;
+  --font-size-base: 15px;
+  --font-size-lg: 17px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 600;
+
+  /* 5. מרווחים ופינות */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  /* 6. צללים */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.04);
+
+  /* 7. מעברים */
+  --transition-fast: 150ms ease;
+  --transition-base: 220ms ease;
+  --transition-slow: 350ms ease;
+}
+
+/* 2. Dark Mode */
+.dark {
+  --color-primary-50: #1E293B;
+  --color-primary-100: #1E3A5F;
+  --color-primary-200: #1E40AF;
+  --color-primary-400: #60A5FA;
+  --color-primary-500: #3B82F6;
+  --color-primary-600: #60A5FA;
+  --color-primary-700: #93C5FD;
+
+  --color-bg-base: #0F172A;
+  --color-bg-surface: #0F172A;
+  --color-bg-card: #1E293B;
+  --color-bg-input: #334155;
+
+  --color-text-primary: #F1F5F9;
+  --color-text-secondary: #CBD5E1;
+  --color-text-muted: #94A3B8;
+  --color-text-on-primary: #FFFFFF;
+
+  --color-border: #334155;
+  --color-border-focus: #60A5FA;
+
+  --color-success: #34D399;
+  --color-warning: #FBBF24;
+  --color-danger: #F87171;
+  --color-info: #60A5FA;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.5), 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* 7. אנימציות */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes ripple {
+  from {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Utility Classes */
+.card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.category-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp var(--transition-base) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--transition-base) forwards;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, var(--color-bg-surface) 25%, var(--color-bg-input) 50%, var(--color-bg-surface) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+/* Dark mode overrides for hardcoded colors */
+.dark .bg-white { background-color: var(--color-bg-card) !important; }
+.dark .bg-gray-50 { background-color: #1E293B !important; }
+.dark .bg-gray-100 { background-color: #334155 !important; }
+.dark .bg-gray-200 { background-color: #475569 !important; }
+.dark .border-gray-100 { border-color: #334155 !important; }
+.dark .border-gray-200 { border-color: #334155 !important; }
+.dark .border-gray-300 { border-color: #475569 !important; }
+.dark .text-gray-400 { color: #94A3B8 !important; }
+.dark .text-gray-500 { color: #CBD5E1 !important; }
+.dark .text-gray-600 { color: #CBD5E1 !important; }
+.dark .text-gray-700 { color: #E2E8F0 !important; }
+.dark .text-gray-800 { color: #F1F5F9 !important; }
+.dark .text-gray-900 { color: #F1F5F9 !important; }
+.dark .divide-gray-100 > :not(:last-child) { border-color: #334155 !important; }
+.dark .hover\:bg-blue-50:hover { background-color: #1E3A5F !important; }
+.dark .hover\:bg-gray-50:hover { background-color: #334155 !important; }
+.dark .hover\:bg-gray-100:hover { background-color: #475569 !important; }
+.dark .bg-blue-50 { background-color: #1E3A5F !important; }
+.dark .bg-red-50 { background-color: #3B1A1A !important; }
+.dark .bg-amber-50 { background-color: #3B2F1A !important; }
+.dark .bg-emerald-50 { background-color: #1A3B2A !important; }
+
+/* Strikethrough animation */
+@keyframes strikeThrough {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.animate-strike-through {
+  position: relative;
+  display: inline;
+}
+
+.animate-strike-through::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  height: 2px;
+  background: currentColor;
+  width: 0;
+  animation: strikeThrough 300ms ease forwards;
+}
+
+/* Flip animation for counters */
+@keyframes flipDown {
+  0% { transform: rotateX(0deg); opacity: 1; }
+  50% { transform: rotateX(90deg); opacity: 0; }
+  50.01% { transform: rotateX(-90deg); opacity: 0; }
+  100% { transform: rotateX(0deg); opacity: 1; }
+}
+
+.animate-flip {
+  display: inline-block;
+  animation: flipDown 400ms ease;
+  perspective: 100px;
+  transform-style: preserve-3d;
+}
+
+/* Slide down for new items */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 80px;
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 250ms ease forwards;
+}
+
+/* Slide in from right (RTL item entry) */
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 250ms ease forwards;
+}
+
+/* Item fade out with collapse */
+@keyframes itemFadeOut {
+  from { opacity: 1; transform: scale(1); max-height: 80px; }
+  to { opacity: 0; transform: scale(0.95); max-height: 0; padding: 0; margin: 0; }
+}
+
+.animate-item-fade-out {
+  animation: itemFadeOut 300ms ease forwards;
+  overflow: hidden;
+}
+
+/* Pull to refresh spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
