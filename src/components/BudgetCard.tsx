@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react";
 
+const fmt = (n: number) =>
+  n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
 interface BudgetData {
   monthly_limit: number;
   spent: number;
@@ -110,10 +113,10 @@ export default function BudgetCard({ onEditBudget, refreshKey }: BudgetCardProps
       {/* Spent / Limit */}
       <div className="flex items-baseline gap-1 mb-2">
         <span className={`text-xl font-bold ${colors.text}`}>
-          {budget.spent.toFixed(0)}&#8362;
+          {fmt(budget.spent)}&#8362;
         </span>
         <span className="text-sm text-gray-400">
-          מתוך {budget.monthly_limit.toFixed(0)}&#8362;
+          מתוך {fmt(budget.monthly_limit)}&#8362;
         </span>
       </div>
 
@@ -129,14 +132,14 @@ export default function BudgetCard({ onEditBudget, refreshKey }: BudgetCardProps
       <p className="text-xs text-gray-500">
         {budget.status === "exceeded" ? (
           <span className="text-red-500 font-medium">
-            חריגה של {Math.abs(budget.remaining).toFixed(0)}&#8362;
+            חריגה של {fmt(Math.abs(budget.remaining))}&#8362;
           </span>
         ) : budget.status === "warning" ? (
           <span className="text-amber-600 font-medium">
-            נותרו רק {budget.remaining.toFixed(0)}&#8362; — כדאי לשים לב
+            נותרו רק {fmt(budget.remaining)}&#8362; — כדאי לשים לב
           </span>
         ) : (
-          <>נותרו {budget.remaining.toFixed(0)}&#8362;</>
+          <>נותרו {fmt(budget.remaining)}&#8362;</>
         )}
       </p>
     </div>

@@ -7,7 +7,7 @@ export async function GET() {
       .from("shopping_list")
       .select("*")
       .eq("is_checked", false)
-      .order("source", { ascending: true }) // auto, manual, suggestion
+      .eq("source", "manual")
       .order("category", { ascending: true });
 
     if (error) {

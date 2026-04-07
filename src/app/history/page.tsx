@@ -10,13 +10,12 @@ import PageLayout from "@/components/layout/PageLayout";
 import { EmptyState } from "@/components/ui";
 import { PullToRefresh } from "@/components/ui/PullToRefresh";
 import { usePullToRefresh } from "@/hooks/usePullToRefresh";
+import { HEBREW_MONTHS } from "@/lib/export/hebrew-months";
 
 const PAGE_SIZE = 20;
 
-const HEBREW_MONTHS = [
-  "ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני",
-  "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר",
-];
+const fmt = (n: number) =>
+  n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 interface GroupedReceipts {
   year: number;
@@ -202,7 +201,7 @@ export default function HistoryPage() {
           <div className="bg-white rounded-2xl border border-[var(--color-border)] p-4 text-center relative overflow-hidden">
             <div className="absolute top-0 left-0 right-0 h-1 bg-blue-400" />
             <p className="text-2xl font-bold text-blue-600">
-              {filteredTotal.toFixed(0)}&#8362;
+              {fmt(filteredTotal)}&#8362;
             </p>
             <p className="text-xs text-[var(--color-text-secondary)]">הוצאות {periodLabel}</p>
           </div>
@@ -214,7 +213,7 @@ export default function HistoryPage() {
           <div className="bg-white rounded-2xl border border-[var(--color-border)] p-4 text-center relative overflow-hidden">
             <div className="absolute top-0 left-0 right-0 h-1 bg-amber-400" />
             <p className="text-2xl font-bold text-amber-600">
-              {filteredAvg.toFixed(0)}&#8362;
+              {fmt(filteredAvg)}&#8362;
             </p>
             <p className="text-xs text-[var(--color-text-secondary)]">ממוצע לקנייה</p>
           </div>

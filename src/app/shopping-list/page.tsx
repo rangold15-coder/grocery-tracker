@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
-import { refreshSmartList } from "@/lib/smartList";
 import Link from "next/link";
 import PageLayout from "@/components/layout/PageLayout";
 import { EmptyState, QuantityInput } from "@/components/ui";
@@ -87,14 +86,12 @@ export default function ShoppingListPage() {
 
   const pullToRefresh = usePullToRefresh({
     onRefresh: async () => {
-      await refreshSmartList();
       await fetchList();
     },
   });
 
   useEffect(() => {
     async function init() {
-      await refreshSmartList();
       await fetchList();
       setLoading(false);
     }
@@ -288,12 +285,6 @@ export default function ShoppingListPage() {
     if (!grouped[item.category]) grouped[item.category] = [];
     grouped[item.category].push(item);
   }
-
-  const sourceLabel: Record<string, { text: string; color: string }> = {
-    auto: { text: "אוטו", color: "bg-blue-50 text-blue-600" },
-    manual: { text: "ידני", color: "bg-gray-100 text-gray-500" },
-    suggestion: { text: "הצעה", color: "bg-emerald-50 text-emerald-600" },
-  };
 
   return (
     <PageLayout title="רשימת קניות">
@@ -506,20 +497,11 @@ export default function ShoppingListPage() {
                         </button>
 
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2">
-                            <span className={`text-sm font-medium transition-all duration-300 ${
+                          <span className={`text-sm font-medium transition-all duration-300 ${
                               isChecked ? "animate-strike-through text-[var(--color-text-muted)]" : "text-[var(--color-text-primary)]"
                             }`}>
                               {item.product_name}
-                            </span>
-                            <span
-                              className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${
-                                sourceLabel[item.source]?.color || ""
-                              }`}
-                            >
-                              {sourceLabel[item.source]?.text || item.source}
-                            </span>
-                          </div>
+                          </span>
                           {!isChecked && (
                             <div className="mt-1.5">
                               <QuantityInput

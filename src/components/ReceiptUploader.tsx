@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { compressImage } from "@/lib/imageUtils";
 
 interface ReceiptUploaderProps {
   onResult: (data: {
@@ -19,7 +20,7 @@ export interface ReceiptItem {
   category: string;
 }
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
 
 export default function ReceiptUploader({ onResult }: ReceiptUploaderProps) {
   const [preview, setPreview] = useState<string | null>(null);
@@ -28,16 +29,17 @@ export default function ReceiptUploader({ onResult }: ReceiptUploaderProps) {
     mimeType: string;
   } | null>(null);
   const [loading, setLoading] = useState(false);
+  const [compressing, setCompressing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  function handleFile(file: File) {
+  async function handleFile(file: File) {
     setError(null);
 
     if (file.size > MAX_FILE_SIZE) {
-      setError("הקובץ גדול מדי. הגודל המקסימלי הוא 10MB.");
+      setError("הקובץ גדול מדי. הגודל המקסימלי הוא 20MB.");
       return;
     }
 
@@ -52,15 +54,22 @@ export default function ReceiptUploader({ onResult }: ReceiptUploaderProps) {
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = reader.result as string;
-      setPreview(result);
-      const base64 = result.split(",")[1];
-      const mimeType = file.type === "image/heic" ? "image/jpeg" : file.type;
+    setCompressing(true);
+    try {
+      const originalSizeKB = Math.round(file.size / 1024);
+      const { base64, mimeType } = await compressImage(file);
+      const compressedSizeKB = Math.round((base64.length * 3) / 4 / 1024);
+      console.log(
+        `[compress] ${file.name}: ${originalSizeKB}KB → ${compressedSizeKB}KB (${mimeType})`
+      );
+      const previewUrl = `data:${mimeType};base64,${base64}`;
+      setPreview(previewUrl);
       setImageData({ base64, mimeType });
-    };
-    reader.readAsDataURL(file);
+    } catch {
+      setError("שגיאה בעיבוד התמונה. נסה שוב.");
+    } finally {
+      setCompressing(false);
+    }
   }
 
   async function handleAnalyze() {
@@ -102,7 +111,31 @@ export default function ReceiptUploader({ onResult }: ReceiptUploaderProps) {
 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
-      {!preview ? (
+      {compressing ? (
+        <div className="flex flex-col items-center gap-3 py-8">
+          <svg
+            className="animate-spin h-8 w-8 text-blue-400"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+            />
+          </svg>
+          <p className="text-gray-600 font-medium">מכווץ תמונה...</p>
+        </div>
+      ) : !preview ? (
         <>
           <div className="flex flex-col sm:flex-row gap-3 w-full">
             <button
@@ -177,7 +210,7 @@ export default function ReceiptUploader({ onResult }: ReceiptUploaderProps) {
           />
 
           <p className="text-sm text-gray-500">
-            תומך ב-JPG, PNG, WebP, HEIC — עד 10MB
+            תומך ב-JPG, PNG, WebP, HEIC — עד 20MB
           </p>
         </>
       ) : (
